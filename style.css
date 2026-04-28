@@ -1,0 +1,1094 @@
+/* --- Color variables --- */
+:root {
+  --yellow: #f7d02a;
+  --dark:   #1c1408;
+  --black:  #111;
+  --text:   #f7e68a;
+  --gray:   #888;
+  --red:    #ff4444;
+}
+
+
+/* --- Basic reset --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  /* 1. Reset and fill the screen */
+  margin: 0;
+  padding: 0;
+  min-height: 100vh; /* Takes up the full height of the browser */
+  
+  /* 2. The Centering Magic */
+  display: flex;
+  flex-direction: column;   /* Keeps header above the grid */
+  justify-content: center;  /* Vertical centering */
+  align-items: center;      /* Horizontal centering */
+  
+  background: #1a150c; /* Your new warmer background */
+  color: var(--text);
+  font-family: 'Courier New', monospace;
+  overflow-x: hidden; /* Prevents unwanted horizontal scrolling */
+}
+
+body::before {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0; left: 0; bottom: 0; right: 0;
+  /* Change black overlay to a very faint yellow/amber tint */
+  background: 
+    linear-gradient(rgba(247, 208, 42, 0.05) 50%, rgba(0, 0, 0, 0.1) 50%),
+    url(stardust.png);
+  opacity: 0.2; /* Keep it subtle */
+  z-index: 9999;
+  pointer-events: none;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  /* This radial gradient creates the 'glow' from the center */
+  background: radial-gradient(
+    circle, 
+    transparent 40%, 
+    rgba(247, 208, 42, 0.15) 100%
+  );
+  pointer-events: none;
+  z-index: 9998;
+}
+
+/* =============================================
+   CONTAINER
+   ============================================= */
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  border: 4px solid var(--yellow);
+  background: var(--black);
+  padding: 20px;
+  min-height: 90vh;
+}
+
+/* 3. The Main Container Width Control */
+.container, main {
+  width: 90%;
+  max-width: 1200px; /* Prevents it from stretching too wide on 4K monitors */
+  margin: 20px auto; /* Adds a small safety margin for vertical scrolling */
+  display: flex;
+  flex-direction: column;
+  gap: 30px; /* Space between header and main content */
+}
+
+/* =============================================
+   HEADER
+   ============================================= */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 3px solid var(--yellow);
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+header h1 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 30px;
+  color: var(--yellow);
+  text-shadow: 2px 2px #000;
+  letter-spacing: 1px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.cpu-logo {
+  height: 80px;      
+  width: auto;      
+  display: block;    
+  filter: drop-shadow(0 0 10px #f7d02a) sepia(1) saturate(5);
+  animation: float 3s ease-in-out infinite;
+}
+
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+  100% { transform: translateY(0px); }
+}
+
+.dots {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+}
+.red    { background: #ff0000; }
+.yellow { background: var(--yellow); }
+.green  { background: #00ff00; }
+
+h1 {
+  font-size: 28px;
+  letter-spacing: 4px;
+  text-align: center;
+  flex: 1;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.dashes {
+  color: var(--yellow);
+  font-size: 18px;
+  letter-spacing: 4px;
+}
+
+button {
+  font-family: 'Press Start 2P', cursive; /* Ensuring the 8-bit font */
+  padding: 10px 20px;
+  background-color: var(--black);
+  color: var(--yellow);
+  border: 4px solid var(--yellow);
+  position: relative;
+  text-transform: uppercase;
+  transition: all 0.1s ease;
+  /* This creates the thick 3D base */
+  box-shadow: 0 6px 0 var(--dark), 0 6px 0 2px var(--yellow);
+  cursor: pointer;
+  margin-bottom: 6px; /* Space for the shadow */
+}
+
+button:active {
+  transform: translateY(4px); /* Moves the button down */
+  box-shadow: 0 2px 0 var(--dark), 0 2px 0 2px var(--yellow); /* Shrinks shadow */
+}
+
+/* Hover Shine */
+button:hover {
+  filter: brightness(1.2); /* Makes the button "glow" */
+  color: var(--black);     /* Forces text to stay dark and visible */
+  cursor: pointer;
+  border-color: #fff;      /* Optional: makes the border pop even more */
+}
+
+
+/* =============================================
+   MAIN 2-COLUMN GRID
+   ============================================= */
+.main-grid {
+  display: grid;
+  /* Left panel takes 1.5 parts, Right panel takes 2.5 parts */
+  grid-template-columns: 1.5fr 2.5fr; 
+  gap: 5px; /* Increased gap for better visual separation */
+  align-items: stretch; /* Keeps heights balanced */
+  width: 100%;
+}
+
+.left-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-right: 25px;
+  border-right: 6px double var(--yellow);
+  box-shadow: 4px 0 14px rgba(247, 208, 42, 0.25);
+  text-align: center;
+}
+
+.right-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-left: 25px;
+}
+
+.left-panel .panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Aligns items to the top instead of spreading them out */
+    gap: 15px !important;        /* Controls the exact space between the sections */
+    padding-top: 20px !important; 
+}
+
+.left-panel, .right-panel {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* =============================================
+   LEFT PANEL CARDS
+   ============================================= */
+.card {
+  padding: 18px 20px;       /* Balanced padding: 18px top/bottom, 20px sides */
+  position: relative;
+  margin-bottom: 15px;
+  width: 100%;
+  overflow-x: auto;
+  background: var(--black);
+  border: 2px solid var(--yellow);
+  padding: 15px;
+}
+
+.card h3 {
+  margin-top: 0;
+  margin-bottom: 12px;      /* Gap between title and input/table */
+  font-size: 11px;
+  font-family: 'Press Start 2P', cursive;
+  letter-spacing: 1px;
+  color: var(--yellow);
+}
+
+h3 {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 0px #000, 0 0 10px var(--yellow);
+  color: var(--yellow);
+}
+
+/* 1. Base style for the dropdown */
+
+select#algorithm {
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  outline: none;
+  border: 2px solid rgba(247, 208, 42, 0.3);
+}
+
+/* 2. Hover & Focus Animation */
+select#algorithm:hover, 
+select#algorithm:focus {
+  border-color: var(--yellow);
+  background-color: #252015; /* Subtle shift to a warmer dark */
+  box-shadow: 0 0 15px rgba(247, 208, 42, 0.4), 
+              inset 0 0 10px rgba(247, 208, 42, 0.2);
+  transform: scale(1.02); /* Slight pop effect */
+  text-shadow: 0 0 5px var(--yellow);
+}
+
+/* 3. The 'Selection Pulse' */
+/* Every time the value is changed, we'll trigger this via JS later */
+@keyframes selection-flash {
+  0% { filter: brightness(1); }
+  50% { filter: brightness(2.5) drop-shadow(0 0 10px var(--yellow)); }
+  100% { filter: brightness(1); }
+}
+
+
+/* Dropdown */
+.dropdown-wrapper {
+  position: relative;
+}
+
+.dropdown-wrapper select {
+  width: 100%;
+  background: var(--dark);
+  color: var(--text);
+  border: 3px solid var(--yellow);
+  padding: 12px 36px 12px 12px;
+  font-size: 15px;
+  font-family: 'Courier New', monospace;
+  cursor: pointer;
+  appearance: none;
+}
+
+.dropdown-wrapper select:focus {
+  outline: none;
+  border-color: #fff;
+}
+
+.dropdown-wrapper span {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--yellow);
+  pointer-events: none;
+}
+
+/* Job counter */
+.counter-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.big-number {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 64px;
+  color: var(--yellow);
+  border: 3px solid var(--yellow);
+  background: var(--black);
+  width: 130px;
+  text-align: center;
+  padding: 14px 0;
+}
+
+@keyframes coinTingle {
+  0% { transform: scale(1); filter: brightness(1); }
+  50% { transform: scale(1.3); filter: brightness(2); text-shadow: 0 0 15px var(--yellow); }
+  100% { transform: scale(1); filter: brightness(1); }
+}
+
+/* Ensure this class exists for JS to target */
+.animate-ping {
+  animation: coinTingle 0.15s ease-out;
+}
+
+/* Ensure the box can actually scale without clipping */
+.number-box {
+  display: inline-block;
+  transition: transform 0.1s;
+}
+
+.up-down {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.up-down button {
+  width: 60px;
+  height: 45px;
+  font-size: 20px;
+}
+
+/* Make the card a split container */
+.execution-module {
+  display: flex;
+  margin-top: 30px;
+  background: var(--black);
+  border: 4px double var(--yellow);
+  padding: 15px 15px 25px 15px; /* Added more padding to the BOTTOM (25px) */
+  align-items: center;
+}
+
+.module-left, .module-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Space between buttons */
+  align-items: center;
+  width: 100%;
+}
+
+
+/* Vertical Divider Line */
+.vertical-divider {
+  width: 4px;
+  height: 150px;
+  border-left: 2px solid var(--yellow);
+  margin: 0 15px;
+  opacity: 0.8;
+}
+
+.module-left h3 {
+    margin-top: 0 !important;    /* Remove the extra margin we added previously */
+    margin-bottom: 10px;         /* Smaller gap between title and input */
+}
+
+/* Right side button stacking */
+.module-right {
+  gap: 12px; /* Space between the two buttons */
+}
+
+#calcBtn {
+  background: var(--yellow);
+  color: var(--black); /* Keep text dark initially */
+  font-family: 'Press Start 2P', cursive;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+/* Style the buttons to fit the right side */
+#calcBtn, #resetBtn {
+  width: 100%;
+  padding: 10px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 10px;
+  cursor: pointer;
+  background: var(--black);
+  border: 3px double;
+  transition: 0.2s;
+}
+
+#resetBtn {
+    /* ... keep your other styles (width, padding, etc.) ... */
+    
+    /* 1. Force the border to be ONLY red on all sides */
+    border: 4px double var(--red) !important;
+    
+    /* 2. Explicitly kill any inherited border-color */
+    border-color: var(--red) !important;
+    
+    /* 3. Ensure no background-clip or outline issues */
+    background-clip: padding-box;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Hover States */
+#calcBtn:hover {
+  background: #fff;       /* Button turns white/bright on hover */
+  color: var(--black) !important; /* Ensure text STAYS black so you can see it */
+  box-shadow: 0 0 20px var(--yellow);
+  transform: translateY(-2px);
+}
+#resetBtn:hover {
+    background: var(--red) !important;
+    color: var(--black) !important;
+    border-color: var(--red) !important;
+    box-shadow: 0 0 20px var(--red);
+  transform: translateY(-2px);
+}
+
+/* Error box */
+.error-box {
+  background: #3a0000;
+  border: 2px solid var(--red);
+  color: var(--red);
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+/* Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 2px solid var(--yellow);
+  padding: 12px 7px;
+  text-align: center;
+  font-size: 15px;
+  vertical-align: middle;
+}
+
+td:first-child {
+  font-weight: 900;
+  font-size: 16px;
+}
+
+th:nth-child(2), td:nth-child(2), /* Arrival Column */
+th:nth-child(4), td:nth-child(4)  /* Priority Column */ {
+  width: 85px;
+  min-width: 85px;
+  max-width: 90px;
+}
+
+/* 2. Make the Burst Time column the "Hero" (Biggest Space) */
+th:nth-child(3), td:nth-child(3) {
+  width: 160px; /* Significantly wider */
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+th {
+  border: 2px solid var(--yellow);
+  padding: 12px 8px;        /* Increased vertical padding for better touch targets */
+  text-align: center;
+  font-size: 14px;          /* Increased from 12px */
+  font-weight: 900;         /* Extra bold for readability */
+  letter-spacing: 1px;      /* Spaced out for better clarity */
+  background: var(--dark);
+  color: var(--yellow);     /* Theme consistency */
+  text-transform: uppercase;
+}
+
+/* Small color dot shown next to Job ID */
+.color-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+/* Number inputs inside the table */
+#tableBody input {
+  width: 100%;
+  background: var(--dark);
+  color: var(--text);
+  border: 2px solid var(--yellow);
+  padding: 10px 15px; 
+  text-align: center; 
+  font-size: 18px;
+  font-weight: 900;
+  font-family: 'Courier New', monospace;
+}
+
+/* Ensure the Job ID text is also bigger to match */
+#tableBody td {
+  font-size: 16px;          /* Increased from 14px */
+  font-weight: bold;
+}
+
+#tableBody input:focus {
+  outline: none;
+  border-color: #fff;
+  background: #1a1a1a;
+}
+
+/* --- INPUT WARNING HIGHLIGHT ---
+   Turns red immediately when user types a bad value */
+#tableBody input.input-error {
+  border-color: var(--red);
+  background: #3a0000;
+  color: var(--red);
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.input-error {
+  animation: shake 0.2s ease-in-out 2;
+  border: 2px solid var(--red);
+}
+
+/* Delete button per row */
+/* Target the last column (Delete) specifically */
+th:last-child, 
+td:last-child {
+  width: 50px;       /* Constrains the column width */
+  padding: 5px;      /* Tighter padding */
+}
+
+/* Update the del-btn class in style.css */
+.del-btn {
+  background-color: #900;       /* Base red color */
+  color: white;
+  border: 2px solid #f44;       /* Brighter red border */
+  
+  /* Compact sizing for a 'tight' look */
+  width: 30px; 
+  height: 30px;
+  padding: 0;
+  font-size: 14px;
+  cursor: pointer;
+  
+  /* 3D arcade shadow effect */
+  box-shadow: 0 4px 0 #500, 0 4px 0 2px #f44;
+  
+  /* Centering the button in the cell */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  transition: all 0.1s ease;
+}
+
+/* Red Button Click Effect */
+.del-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #500, 0 2px 0 2px #f44;
+}
+
+/* Red Button Hover Glow */
+.del-btn:hover {
+  background: var(--red);
+  filter: brightness(1.2);
+}
+
+#calcBtn, #resetBtn {
+  width: 100%;
+  padding: 12px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 10px;
+  cursor: pointer;
+  background: var(--black);
+  border: 4px double; /* This creates the retro 'leveled' border */
+  transition: 0.1s;
+  text-transform: uppercase;
+}
+
+#calcBtn, #resetBtn {
+    width: 100%;
+    padding: 15px; /* Ensure vertical height is the same */
+    font-family: 'Press Start 2P', cursive;
+    font-size: 11px;
+    cursor: pointer;
+    background: var(--black);
+    text-transform: uppercase;
+    transition: all 0.1s ease;
+    
+    /* 1. The Border: Use 'double' to get that retro frame */
+    border: 5px double !important; 
+    display: flex;
+    align-items: center;     /* Vertical center */
+    justify-content: center; /* Horizontal center */
+    
+    /* 2. Reset padding and line-height */
+    padding: 18px 10px;      /* Adjust vertical padding to set button height */
+    line-height: 1;          /* Prevents the font's internal spacing from pushing it down */
+    
+    /* 3. Text rendering fix */
+    text-align: center;
+}
+
+#calcBtn {
+    color: var(--yellow) !important;
+    border-color: var(--yellow) !important;
+    /* 2. The Depth: This creates the 'leveled' look */
+    box-shadow: 0 5px 0 #8a6d00; 
+    margin-bottom: 5px; /* Compensation for shadow */
+}
+
+#resetBtn {
+    color: var(--red) !important;
+    border-color: var(--red) !important;
+    /* 2. The Depth: Matching the calculate button exactly */
+    box-shadow: 0 5px 0 #6e0000; 
+    margin-top: 5px; /* Added spacing between them */
+}
+
+#calcBtn:active, #resetBtn:active {
+    transform: translateY(3px);
+    box-shadow: 0 2px 0 var(--black);
+}
+
+#calcBtn:hover { background: var(--yellow); color: var(--black); }
+#resetBtn:hover { background: var(--red); color: var(--black); }
+
+@keyframes pulseGlow {
+  0% { box-shadow: 0 6px 0 var(--dark), 0 6px 0 2px var(--yellow); }
+  50% { box-shadow: 0 6px 20px var(--yellow), 0 6px 0 2px var(--yellow); }
+  100% { box-shadow: 0 6px 0 var(--dark), 0 6px 0 2px var(--yellow); }
+}
+
+
+/* =============================================
+   RIGHT PANEL BOXES
+   ============================================= */
+.panel {
+  background: linear-gradient(135deg, #1a140a 0%, #000000 100%);
+  border: 4px solid #5d4037; /* Muddy Brown Stone */
+  box-shadow: 
+    inset 0 0 15px rgba(247, 208, 42, 0.2), /* Soft Gold Glow */
+    5px 5px 0px #3d2b1f; /* Chiseled Shadow */
+  position: relative;
+  overflow: hidden;
+}
+
+.panel-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 2px solid var(--yellow);
+  padding: 12px 16px;
+}
+
+.panel-top h3 {
+  font-size: 11px;
+  letter-spacing: 1px;
+  font-family: 'Press Start 2P', cursive;
+}
+
+.panel-content {
+  padding: 15px;
+  font-family: 'Courier New', monospace; /* Keep consistent with table values */
+  font-size: 18px;        /* Bigger size for readability */
+  font-weight: 900;       /* Maximum boldness */
+  line-height: 1.6;
+  text-align: center;     /* Centers the result text */
+  color: var(--text);
+  
+  /* Adds a subtle 'retro glow' to the bold text */
+  text-shadow: 0 0 5px rgba(247, 230, 138, 0.3); 
+}
+
+/* Ensure the gray placeholder text is also bold but faded */
+.gray-text {
+  color: var(--gray) !important;
+  font-weight: 900;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.panel-content:not(.gray-text) {
+  animation: fadeUp 0.5s ease-out;
+}
+
+@keyframes indyWhip {
+  0% { 
+    transform: translateY(50px) scaleY(0); 
+    opacity: 0; 
+  }
+  70% { 
+    transform: translateY(-10px) scaleY(1.2); 
+  }
+  100% { 
+    transform: translateY(0) scaleY(1); 
+    opacity: 1; 
+  }
+}
+
+.panel-content {
+  animation: indyWhip 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.win-btn {
+  width: 24px;
+  height: 22px;
+  font-size: 13px;
+  padding: 0;
+  border: 2px solid var(--yellow);
+  margin-left: 4px;
+}
+
+
+/* =============================================
+   GANTT CHART
+   ============================================= */
+.burst-labels {
+  display: flex;
+  padding: 8px 12px 0;
+  min-height: 24px;
+  font-size: 14px;
+}
+
+.gantt-chart-wrapper {
+  width: 100%;
+  overflow-x: auto; /* Allows scrolling on small screens */
+  padding-bottom: 10px;
+  border: 2px inset var(--gray);
+  background: #000;
+}
+
+.gantt-bars {
+  display: flex;
+  height: 58px;
+  background: #1a1a1a;
+  margin: 6px 12px 0;
+  border: 2px solid #444;
+  overflow: hidden;
+}
+
+.time-labels {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 12px 12px;
+  font-size: 14px;
+}
+
+/* Each bar inside the Gantt */
+.gantt-bar {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 14px;
+  font-family: 'Press Start 2P', cursive;
+  box-sizing: border-box;
+  overflow: hidden;
+  white-space: nowrap;
+  animation: slideIn 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  transform-origin: left;
+}
+
+@keyframes slideIn {
+  from { transform: scaleX(0); opacity: 0; }
+  to { transform: scaleX(1); opacity: 1; }
+}
+
+/* Circled final time marker */
+.end-time {
+  border: 2px solid var(--yellow);
+  border-radius: 50%;
+  padding: 2px 7px;
+  color: var(--yellow);
+  font-weight: bold;
+}
+
+
+/* =============================================
+   RESULT PANELS (TAT and WT)
+   ============================================= */
+.results-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.panel-content {
+  padding: 14px;
+  min-height: unset; /* Let content determine height — no forced empty space */
+}
+
+/* Placeholder text */
+.gray-text {
+  color: var(--gray);
+  font-style: italic;
+  font-size: 13px;
+  font-family: 'Courier New', monospace;
+  text-align: center;
+  padding: 14px 0;
+}
+
+/* Formula lines stacked, avg bar pinned below */
+.result-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.result-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  font-size: 15px;
+  font-family: 'Courier New', monospace;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+/* Each formula line — subtle bottom border as separator */
+.result-line {
+  padding: 10px 10px 10px 14px;
+  border-left: 4px solid transparent; /* color set inline by JS */
+  border-bottom: 1px solid rgba(247, 208, 42, 0.1);
+}
+
+.result-line:last-child {
+  border-bottom: none;
+}
+
+/* Avg bar: compact single-line strip */
+.avg-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+  padding: 10px 14px;
+  border: 2px solid var(--yellow);
+  border-left: 5px solid var(--yellow);
+  background: rgba(247, 208, 42, 0.07);
+  font-family: 'Courier New', monospace;
+  gap: 10px;
+}
+
+/* "AVG TAT" label — small, gray, left side */
+.avg-box span {
+  font-size: 11px;
+  color: var(--gray);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+/* The number — bold, yellow, right side */
+.avg-box b {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--yellow);
+  font-family: 'Courier New', monospace;
+  text-shadow: 0 0 8px rgba(247, 208, 42, 0.45);
+  white-space: nowrap;
+}
+
+
+/* =============================================
+   TIMELINE
+   ============================================= */
+.timeline-chart {
+  font-size: 15px;
+  color: var(--text);
+  padding: 8px 0;
+  font-family: 'Courier New', monospace;
+}
+
+.tl-row {
+  display: flex;
+}
+
+.tl-cell {
+  flex: 1;
+  text-align: center;
+  padding: 2px 0;
+}
+
+.tl-middle {
+  border-top: 2px solid var(--yellow);
+  border-bottom: 2px solid var(--yellow);
+  padding: 4px 0;
+  font-size: 18px;
+}
+
+
+/* =============================================
+   CPU UTILIZATION
+   ============================================= */
+.cpu-display {
+  text-align: center;
+  font-size: 15px;
+  font-family: 'Courier New', monospace;
+  color: var(--text);
+  line-height: 2.2;
+}
+
+.cpu-line {
+  border-top: 2px solid var(--yellow);
+  margin: 4px 30px;
+}
+
+.cpu-result {
+  border: 3px solid var(--yellow);
+  padding: 4px 12px;
+  font-weight: bold;
+  font-size: 18px;
+  color: var(--yellow);
+}
+
+/* Idle time shown below utilization */
+.idle-info {
+  font-size: 14px;
+  color: var(--yellow);
+  margin-top: 8px;
+  border-top: 3px solid var(--red);
+  padding-top: 8px;
+  font-family: 'Courier New', monospace;
+}
+
+@keyframes idlePulse {
+  0% { opacity: 0.4; }
+  50% { opacity: 0.7; }
+  100% { opacity: 0.4; }
+}
+
+/* Update your JS logic where you create the idle bar to add this class */
+
+
+/* =============================================
+   MOBILE RESPONSIVENESS (Media Queries)
+   ============================================= */
+@media (max-width: 768px) {
+  /* Fix the container padding for small screens */
+  body {
+    padding: 10px;
+  }
+
+  .container {
+    padding: 15px;
+    border-width: 3px;
+  }
+
+  /* 1. Fix the Header: Stack and Center everything */
+  header {
+  display: flex;
+  justify-content: space-between; /* Pushes left/right groups to the edges */
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 4px double var(--yellow);
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 30px; /* Kept your original spacing */
+}
+
+  .header-left, 
+.header-right {
+  flex: 1; /* This acts as a 'spacer' */
+  display: flex;
+  align-items: center;
+}
+
+.header-right {
+  justify-content: flex-end; /* Keeps Reset button on the far right */
+}
+
+  h1 {
+  flex: 2; /* Gives the title more priority */
+  text-align: center;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 22px;
+  color: var(--yellow);
+  letter-spacing: 2px;
+  margin: 0; /* Remove default margins that might shift it */
+  white-space: nowrap; /* Keeps it on one line */
+}
+
+  /* 2. Fix the Main Grid: Remove the vertical line */
+  .main-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .left-panel {
+    border-right: none; 
+    border-bottom: 4px double var(--yellow);
+    padding-right: 0;
+    margin-bottom: 30px;
+    width: 100%;
+  }
+
+
+  .right-panel {
+    padding-left: 0;
+    width: 100%;
+  }
+
+  /* 3. Stack the result boxes (TAT, WT, etc.) */
+  .results-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  /* 4. Table Polish: Ensure it doesn't break the screen */
+  .card {
+    overflow-x: auto;
+  }
+
+  table {
+    min-width: 400px; /* Keep it readable */
+  }
+
+  .big-number {
+    font-size: 48px;
+    width: 100px;
+  }
+
+  th {
+    font-size: 11px;        /* Slightly smaller for narrow mobile screens */
+    padding: 10px 4px;
+  }
+
+  #tableBody input {
+    font-size: 16px;        /* Prevents iOS from zooming in when clicking inputs */
+    padding: 8px;
+  }
+}
+
