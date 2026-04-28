@@ -63,18 +63,6 @@ body::after {
   z-index: 9998;
 }
 
-@keyframes torchFlicker {
-  0%, 100% { 
-    opacity: 0.8; 
-    transform: scale(1); 
-    filter: brightness(1);
-  }
-  50% { 
-    opacity: 1; 
-    transform: scale(1.05); 
-    filter: brightness(1.2);
-  }
-}
 /* =============================================
    CONTAINER
    ============================================= */
@@ -303,9 +291,6 @@ select#algorithm:focus {
   100% { filter: brightness(1); }
 }
 
-.selection-active {
-  animation: selection-flash 0.4s ease-out;
-}
 
 /* Dropdown */
 .dropdown-wrapper {
@@ -644,21 +629,6 @@ td:last-child {
   text-transform: uppercase;
 }
 
-/* Calculate button */
-.calc-btn {
-  width: 100%;
-  background: var(--yellow);
-  color: var(--black);
-  border: none;
-  padding: 15px;
-  font-size: 17px;
-  font-weight: bold;
-  font-family: 'Press Start 2P', cursive;
-  letter-spacing: 2px;
-  margin-top: 14px;
-  cursor: pointer;
-}
-
 #calcBtn, #resetBtn {
     width: 100%;
     padding: 15px; /* Ensure vertical height is the same */
@@ -713,15 +683,6 @@ td:last-child {
   100% { box-shadow: 0 6px 0 var(--dark), 0 6px 0 2px var(--yellow); }
 }
 
-.calculate {
-  animation: pulseGlow 2s infinite;
-}
-
-.calculate:hover {
-  background-color: var(--yellow);
-  color: var(--black);
-  box-shadow: 0 6px 15px var(--yellow); /* Adds a "lit up" arcade glow */
-}
 
 /* =============================================
    RIGHT PANEL BOXES
@@ -857,11 +818,6 @@ td:last-child {
 @keyframes slideIn {
   from { transform: scaleX(0); opacity: 0; }
   to { transform: scaleX(1); opacity: 1; }
-}
-
-.gantt-bar-container > div {
-  animation: slideIn 0.4s ease-out forwards;
-  transform-origin: left;
 }
 
 /* Circled final time marker */
@@ -1008,118 +964,202 @@ td:last-child {
 }
 
 /* Update your JS logic where you create the idle bar to add this class */
-.gantt-bar-idle {
-  animation: idlePulse 2s infinite ease-in-out !important;
-}
 
 
 /* =============================================
    MOBILE RESPONSIVENESS (Media Queries)
    ============================================= */
 @media (max-width: 768px) {
-  /* Fix the container padding for small screens */
+
+  /* --- Body & Container --- */
   body {
-    padding: 10px;
-  }
-  
-  .container {
-    padding: 15px;
-    border-width: 3px;
+    padding: 0;
+    justify-content: flex-start;
+    align-items: stretch;
   }
 
-  /* 1. Fix the Header: Stack and Center everything */
+  .container, .container main {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 12px;
+    border-width: 0;
+    gap: 16px;
+  }
+
+  /* --- Header: stack logo row on top, title below --- */
   header {
-  display: flex;
-  justify-content: space-between; /* Pushes left/right groups to the edges */
-  align-items: center;
-  padding: 20px 0;
-  border-bottom: 4px double var(--yellow);
-  margin-bottom: 30px;
-  width: 100%;
-}
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+    text-align: center;
+  }
 
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 30px; /* Kept your original spacing */
-}
+  .header-left {
+    justify-content: center;
+    gap: 16px;
+  }
 
-  .header-left, 
-.header-right {
-  flex: 1; /* This acts as a 'spacer' */
-  display: flex;
-  align-items: center;
-}
+  .header-right {
+    display: none; /* Hide the decorative dashes on mobile */
+  }
 
-.header-right {
-  justify-content: flex-end; /* Keeps Reset button on the far right */
-}
-
+  header h1,
   h1 {
-  flex: 2; /* Gives the title more priority */
-  text-align: center;
-  font-family: 'Press Start 2P', cursive;
-  font-size: 22px;
-  color: var(--yellow);
-  letter-spacing: 2px;
-  margin: 0; /* Remove default margins that might shift it */
-  white-space: nowrap; /* Keeps it on one line */
-}
+    font-size: 13px;
+    letter-spacing: 1px;
+    white-space: normal;
+    text-align: center;
+    flex: unset;
+    line-height: 1.6;
+  }
 
-  /* 2. Fix the Main Grid: Remove the vertical line */
+  .cpu-logo {
+    height: 50px;
+  }
+
+  .dots .dot {
+    width: 12px;
+    height: 12px;
+  }
+
+  /* --- Main grid: single column --- */
   .main-grid {
     display: flex;
     flex-direction: column;
-    gap: 0;
+    gap: 20px;
+    width: 100%;
   }
 
   .left-panel {
-    border-right: none; 
-    border-bottom: 4px double var(--yellow);
+    width: 100%;
+    border-right: none;
+    border-bottom: 3px double var(--yellow);
     padding-right: 0;
-    margin-bottom: 30px;
-    width: 100%;
+    padding-bottom: 20px;
+    margin-bottom: 0;
+    box-shadow: none;
+    text-align: center;
   }
 
-  
   .right-panel {
-    padding-left: 0;
     width: 100%;
+    padding-left: 0;
   }
 
-  /* 3. Stack the result boxes (TAT, WT, etc.) */
-  .results-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
-  /* 4. Table Polish: Ensure it doesn't break the screen */
+  /* --- Cards --- */
   .card {
     overflow-x: auto;
-  }
-  
-  table {
-    min-width: 400px; /* Keep it readable */
+    padding: 12px;
+    margin-bottom: 0;
   }
 
+  /* --- Execution module: stack vertically --- */
+  .execution-module {
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 0;
+    padding: 16px 12px;
+  }
+
+  .vertical-divider {
+    display: none;
+  }
+
+  .module-left {
+    width: 100%;
+    align-items: center;
+  }
+
+  .module-right {
+    width: 100%;
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .module-right #calcBtn,
+  .module-right #resetBtn {
+    flex: 1;
+    padding: 14px 6px;
+    font-size: 9px;
+  }
+
+  /* --- Job counter --- */
   .big-number {
     font-size: 48px;
     width: 100px;
   }
 
+  .counter-area {
+    justify-content: center;
+  }
+
+  /* --- Table --- */
+  table {
+    min-width: 360px;
+  }
+
   th {
-    font-size: 11px;        /* Slightly smaller for narrow mobile screens */
-    padding: 10px 4px;
+    font-size: 9px;
+    padding: 8px 3px;
+    letter-spacing: 0;
+  }
+
+  td {
+    font-size: 13px;
+    padding: 8px 3px;
   }
 
   #tableBody input {
-    font-size: 16px;        /* Prevents iOS from zooming in when clicking inputs */
-    padding: 8px;
+    font-size: 16px; /* Prevents iOS auto-zoom */
+    padding: 8px 4px;
+  }
+
+  #tableBody td {
+    font-size: 13px;
+  }
+
+  /* --- Results grid: single column --- */
+  .results-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  /* --- Result panel content --- */
+  .result-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .avg-box {
+    width: 100%;
+  }
+
+  /* --- Gantt chart --- */
+  .gantt-bars {
+    margin: 6px 4px 0;
+    overflow-x: auto;
+  }
+
+  .burst-labels,
+  .time-labels {
+    padding-left: 4px;
+    padding-right: 4px;
+    font-size: 11px;
+  }
+
+  .gantt-bar {
+    font-size: 10px;
+  }
+
+  /* --- Panel content text sizing --- */
+  .panel-content {
+    font-size: 14px;
+  }
+
+  .result-lines {
+    font-size: 13px;
   }
 }
-.container .main-grid .left-panel {
-    border-right: none;
-    border-bottom: 4px double var(--yellow);
-    width: 100%;
-    padding-right: 0;
-  }
